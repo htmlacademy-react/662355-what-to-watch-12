@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть»
 
 * Студент: [ Evgeniia Dmitrieva](https://up.htmlacademy.ru/react/12/user/662355).
-* Наставник: `Неизвестно`.
+* Наставник: [ Олег Соловьев ](https://htmlacademy.ru/profile/id2282557).
 
 ---
 
