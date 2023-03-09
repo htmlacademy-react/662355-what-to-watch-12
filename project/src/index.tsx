@@ -6,8 +6,9 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
+
 root.render(
   <React.StrictMode>
-    <App />
+    <App title='Hotel Grand Budapest Hotel' genre='Drama' release={2014} />
   </React.StrictMode>,
 );
