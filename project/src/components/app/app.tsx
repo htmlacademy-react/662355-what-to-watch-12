@@ -23,7 +23,7 @@ function App({
         <Route path='/' element={< MainScreen title={title} genre={genre} release={release} />} />
         <Route path='/login' element={<SignInScreen />} />
         <Route path='/mylist' element={
-          <PrivateRoute>
+          <PrivateRoute hasAccess={false}>
             <MyListScreen />
           </PrivateRoute>
         }
