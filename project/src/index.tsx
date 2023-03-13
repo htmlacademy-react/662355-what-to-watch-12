@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
+import { films } from './mock/film';
+import { reviews } from './mock/review';
+import { user } from './mock/user';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -9,6 +12,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App title='Hotel Grand Budapest Hotel' genre='Drama' release={2014} />
+    <App films={films} reviews={reviews} user={user} />
   </React.StrictMode>,
 );
