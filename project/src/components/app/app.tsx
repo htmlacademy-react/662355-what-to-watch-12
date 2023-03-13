@@ -7,30 +7,33 @@ import AddRewiewScreen from '../../pages/add-rewiew/add-rewiew';
 import PlayerScreen from '../../pages/player/pleyer';
 import NotFoundScreen from '../../pages/not-found/not-found';
 import PrivateRoute from '../private-route';
+import { Films } from '../../types/film';
+import { Reviews } from '../../types/review';
+import { User } from '../../types/user';
 
 type AppScreenProps = {
-  title: string;
-  genre: string;
-  release: number;
+  films: Films;
+  reviews: Reviews;
+  user: User;
 }
 
 function App({
-  title, genre, release
+  films, reviews, user
 }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={< MainScreen title={title} genre={genre} release={release} />} />
+        <Route path='/' element={< MainScreen films={films} user={user} />} />
         <Route path='/login' element={<SignInScreen />} />
         <Route path='/mylist' element={
-          <PrivateRoute hasAccess={false}>
-            <MyListScreen />
+          <PrivateRoute hasAccess>
+            <MyListScreen films={films} user={user} />
           </PrivateRoute>
         }
         />
-        <Route path='/films/:id' element={<FilmScreen />} />
-        <Route path='/films/:id/review' element={<AddRewiewScreen />} />
-        <Route path='/player/:id' element={<PlayerScreen />} />
+        <Route path='/films/:id' element={<FilmScreen films={films} user={user} />} />
+        <Route path='/films/:id/review' element={<AddRewiewScreen films={films} user={user} />} />
+        <Route path='/player/:id' element={<PlayerScreen films={films} />} />
         <Route path='*' element={<NotFoundScreen />} />
       </Routes>
     </BrowserRouter>
