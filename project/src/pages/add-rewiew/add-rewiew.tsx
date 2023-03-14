@@ -2,7 +2,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import AddComment from '../../components/add-comment/add-comment';
 import Logo from '../../components/logo/logo';
 import UserIcon from '../../components/user/user';
-import { Films } from '../../types/film';
+import { Film, Films } from '../../types/film';
 import { User } from '../../types/user';
 
 type AddRewiewScreenProps = {
@@ -12,11 +12,12 @@ type AddRewiewScreenProps = {
 
 export default function AddRewiewScreen({ films, user }: AddRewiewScreenProps): JSX.Element {
   const { id } = useParams();
-  if (!id) {
-    return <Navigate to="/" />;
+  let film: Film | undefined;
+  if (id) {
+    film = films.find((filmElem) => filmElem.id === +id);
   }
-  const film = films.find((filmElem) => filmElem.id === +id);
-  if (!film) {
+
+  if (!id || !film) {
     return <Navigate to="/" />;
   }
 
@@ -55,6 +56,7 @@ export default function AddRewiewScreen({ films, user }: AddRewiewScreenProps): 
         <AddComment />
       </div>
 
-    </section>);
+    </section>
+  );
 
 }

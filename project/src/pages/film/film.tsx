@@ -4,7 +4,7 @@ import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import PromoButtons from '../../components/promo-buttons/promo-buttons';
 import UserIcon from '../../components/user/user';
-import { Films } from '../../types/film';
+import { Films, Film } from '../../types/film';
 import { User } from '../../types/user';
 
 type FilmScreenProps = {
@@ -14,14 +14,14 @@ type FilmScreenProps = {
 
 export default function FilmScreen({ user, films }: FilmScreenProps) {
   const { id } = useParams();
-  if (!id) {
-    return <Navigate to="/" />;
-  }
-  const filmChoosen = films.find((film) => film.id === +id);
-  if (!filmChoosen) {
-    return <Navigate to="/" />;
+  let filmChoosen: Film | undefined;
+  if (id) {
+    filmChoosen = films.find((filmElem) => filmElem.id === +id);
   }
 
+  if (!id || !filmChoosen) {
+    return <Navigate to="/" />;
+  }
   function convertRating(rating: number): string {
     if (rating <= 3) {
       return 'Bad';

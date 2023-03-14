@@ -20,9 +20,9 @@ export default function AddComment(): JSX.Element {
       text: evt.target.value,
     });
   };
-  const arrComponents = [];
+  const starInputs = [];
   for (let i = 1; i <= 10; i++) {
-    arrComponents.push(
+    starInputs.push(
       <>
         <input className="rating__input" id={`star-${i}`} type="radio" name="rating" value={i} onChange={onChangeHandler} checked={formData.rating === i} key={`input-${i}`} />
         <label className="rating__label" htmlFor={`star-${i}`} key={`label-${i}`}>Rating {i}</label>
@@ -32,7 +32,7 @@ export default function AddComment(): JSX.Element {
     <form action="#" className="add-review__form">
       <div className="rating">
         <div className="rating__stars">
-          {arrComponents}
+          {starInputs}
         </div>
       </div>
 
