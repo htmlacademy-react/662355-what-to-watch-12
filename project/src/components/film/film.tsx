@@ -11,9 +11,9 @@ type FilmCardProperty = {
 }
 
 
-export default function FilmCard({ film, onMouseEnter: onMouseOver, isPlaying, onMouseLeave, isReset }: FilmCardProperty): JSX.Element {
+export default function FilmCard({ film, onMouseEnter, isPlaying, onMouseLeave, isReset }: FilmCardProperty): JSX.Element {
   return (
-    <article className="small-film-card catalog__films-card" onMouseEnter={onMouseOver} onMouseLeave={onMouseLeave}>
+    <article className="small-film-card catalog__films-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <div className="small-film-card__image">
         {
           isReset ? <img src={film.previewImage} alt={film.name} width="280" height="175" />

@@ -2,18 +2,22 @@ import MainScreen from '../../pages/main/main';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import SignInScreen from '../../pages/sing-in/sign-in';
 import MyListScreen from '../../pages/my-list/my-list';
-import FilmScreen from '../../pages/film/film';
 import AddRewiewScreen from '../../pages/add-rewiew/add-rewiew';
 import PlayerScreen from '../../pages/player/pleyer';
 import NotFoundScreen from '../../pages/not-found/not-found';
 import PrivateRoute from '../private-route';
 import { Films } from '../../types/film';
-import { Reviews } from '../../types/review';
+import { Reviews as ReviewsType } from '../../types/review';
 import { User } from '../../types/user';
+import FilmScreen from '../../pages/film-layout/film';
+import Overview from '../overview.tsx/overview';
+import Details from '../details/details';
+import { TypeOfTab } from '../../utils';
+import Reviews from '../reviews/reviews';
 
 type AppScreenProps = {
   films: Films;
-  reviews: Reviews;
+  reviews: ReviewsType;
   user: User;
 }
 
@@ -31,7 +35,12 @@ function App({
           </PrivateRoute>
         }
         />
-        <Route path='/films/:id' element={<FilmScreen films={films} user={user} />} />
+        <Route path='/films/:id' element={<FilmScreen films={films} user={user} />} >
+          <Route index element={<Overview films={films} choosedTab={TypeOfTab.OVERVIEW} />} />
+          <Route path='/films/:id/details' element={<Details films={films} choosedTab={TypeOfTab.DETAILS} />} />
+          <Route path='/films/:id/reviews' element={<Reviews reviews={reviews} choosedTab={TypeOfTab.REVIEWS} />} />
+        </Route>
+
         <Route path='/films/:id/review' element={<AddRewiewScreen films={films} user={user} />} />
         <Route path='/player/:id' element={<PlayerScreen films={films} />} />
         <Route path='*' element={<NotFoundScreen />} />
