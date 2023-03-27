@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
-import { useFilmByParamId } from '../../hooks/use-film-by-param-id';
+import { useFilmByParamId } from '../../hooks';
 import { Films } from '../../types/film';
-import { fotmatDuration } from '../../utils';
+import { formatDuration } from '../../utils';
 
 type DetailsProps = {
   films: Films;
@@ -31,7 +31,7 @@ export default function Details({ films }: DetailsProps): JSX.Element {
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{fotmatDuration(film.runTime)}</span>
+          <span className="film-card__details-value">{formatDuration(film.runTime)}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

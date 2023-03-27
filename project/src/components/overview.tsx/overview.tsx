@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { useFilmByParamId } from '../../hooks/use-film-by-param-id';
+import { useFilmByParamId } from '../../hooks';
 import { Films } from '../../types/film';
 
 type OverviewProps = {

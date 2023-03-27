@@ -5,7 +5,7 @@ import PromoButtons from '../../components/promo-buttons/promo-buttons';
 import SameFilms from '../../components/same-films/same-films';
 import Tabs from '../../components/tabs/tabs';
 import UserIcon from '../../components/user/user';
-import { useFilmByParamId } from '../../hooks/use-film-by-param-id';
+import { useFilmByParamId } from '../../hooks';
 import { Films } from '../../types/film';
 import { User } from '../../types/user';
 import { TypeOfTab } from '../../utils';
