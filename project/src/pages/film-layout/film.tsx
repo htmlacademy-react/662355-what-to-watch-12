@@ -1,12 +1,14 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import { FilmList } from '../../components/film-list/film-list';
+import { Navigate, Outlet, useLocation, } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import PromoButtons from '../../components/promo-buttons/promo-buttons';
+import SameFilms from '../../components/same-films/same-films';
+import Tabs from '../../components/tabs/tabs';
 import UserIcon from '../../components/user/user';
 import { useFilmByParamId } from '../../hooks/use-film-by-param-id';
 import { Films } from '../../types/film';
 import { User } from '../../types/user';
+import { TypeOfTab } from '../../utils';
 
 type FilmScreenProps = {
   user: User;
@@ -14,12 +16,25 @@ type FilmScreenProps = {
 }
 
 export default function FilmScreen({ user, films }: FilmScreenProps) {
+  const location = useLocation();
   const film = useFilmByParamId(films);
   if (!film) {
     return <Navigate to="/" />;
   }
 
   const sameFilms = films.filter((filmEl) => filmEl.id !== film.id && filmEl.genre === film.genre).slice(0, 4);
+
+  function getType(pathname: string): TypeOfTab {
+    const tab = pathname.slice(pathname.lastIndexOf('/') + 1, pathname.length);
+    switch (tab) {
+      case TypeOfTab.DETAILS:
+      case TypeOfTab.REVIEWS:
+        return tab;
+      default:
+        return TypeOfTab.OVERVIEW;
+    }
+
+  }
 
   return (
     <>
@@ -47,20 +62,16 @@ export default function FilmScreen({ user, films }: FilmScreenProps) {
               <img src={film.backgroundImage} alt={film.name} width="218" height="327" />
             </div>
 
-            <Outlet />
+            <Tabs id={film.id} choosedTabs={getType(location.pathname)}>
+              <Outlet />
+            </Tabs>
 
           </div>
         </div>
       </section>
 
       <div className="page-content">
-        {
-          sameFilms.length !== 0 &&
-          <section className="catalog catalog--like-this">
-            <h2 className="catalog__title">More like this</h2>
-            <FilmList films={sameFilms} />
-          </section>
-        }
+        <SameFilms films={sameFilms} />
         <Footer />
       </div>
     </>

@@ -1,6 +1,8 @@
 
 enum TypeOfTab {
-  OVERVIEW, REVIEWS, DETAILS
+  OVERVIEW = 'overview',
+  REVIEWS = 'reviews',
+  DETAILS = 'details'
 }
 
 function fotmatDuration(minutes: number) {
