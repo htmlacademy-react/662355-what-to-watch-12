@@ -5,3 +5,5 @@ export enum TypeOfTab {
   REVIEWS = 'reviews',
   DETAILS = 'details'
 }
+
+export const FILMS_COUNT_STEP = 8;

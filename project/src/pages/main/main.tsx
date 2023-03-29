@@ -52,9 +52,6 @@ export default function MainScreen({ user }: MainProps): JSX.Element {
           <GenreList films={films} />
           <FilmList films={filmsByGenre} />
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
         </section>
 
         <Footer />
