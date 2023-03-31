@@ -8,7 +8,7 @@ import UserIcon from '../../components/user/user';
 import { useFilmByParamId } from '../../hooks';
 import { Films } from '../../types/film';
 import { User } from '../../types/user';
-import { TypeOfTab } from '../../utils';
+import { TypeOfTab } from '../../const';
 
 type FilmScreenProps = {
   user: User;

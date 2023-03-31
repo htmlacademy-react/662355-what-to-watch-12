@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { FilmList } from '../../components/film-list/film-list';
 import Footer from '../../components/footer/footer';
 import GenreList from '../../components/genre-list/genre-list';
@@ -5,17 +6,26 @@ import Logo from '../../components/logo/logo';
 import Promo from '../../components/promo/promo';
 import UserIcon from '../../components/user/user';
 import { useAppSelector } from '../../hooks';
-import { Films } from '../../types/film';
 import { User } from '../../types/user';
+import { ALL_GENRES } from '../../const';
 
 
 type MainProps = {
-  films: Films;
   user: User;
 }
 
-export default function MainScreen({ films, user }: MainProps): JSX.Element {
-  const filmsByGenre = useAppSelector((state) => state.films);
+export default function MainScreen({ user }: MainProps): JSX.Element {
+  const films = useAppSelector((state) => state.films);
+  const genre = useAppSelector((state) => state.genre);
+  const [filmsByGenre, setFilmsByGender] = useState(films);
+
+  useEffect(() => {
+    let filteredFilms = films;
+    if (genre !== ALL_GENRES) {
+      filteredFilms = films.filter((film) => film.genre === genre);
+    }
+    setFilmsByGender(filteredFilms);
+  }, [genre, films]);
 
   return (
     <>
@@ -40,7 +50,6 @@ export default function MainScreen({ films, user }: MainProps): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <GenreList films={films} />
-
           <FilmList films={filmsByGenre} />
 
           <div className="catalog__more">

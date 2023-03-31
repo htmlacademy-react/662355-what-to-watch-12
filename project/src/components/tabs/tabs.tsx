@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { TypeOfTab } from '../../utils';
+import { TypeOfTab } from '../../const';
 import cn from 'classnames';
 
 type TabsProps = {

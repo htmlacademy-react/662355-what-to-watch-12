@@ -1,10 +1,4 @@
 
-enum TypeOfTab {
-  OVERVIEW = 'overview',
-  REVIEWS = 'reviews',
-  DETAILS = 'details'
-}
-
 function formatDuration(minutes: number) {
   if (minutes < 60) {
     return `${minutes}m`;
@@ -15,5 +9,5 @@ function formatDuration(minutes: number) {
   }
 }
 
-export { formatDuration, TypeOfTab };
+export { formatDuration };
 
