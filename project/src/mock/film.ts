@@ -153,7 +153,7 @@ export const films: Film[] =
       'name': 'Aviator',
       'posterImage': 'img/aviator.jpg',
       'previewImage': 'img/aviator.jpg',
-      'backgroundImage': 'img/taviator.jpg',
+      'backgroundImage': 'img/aviator.jpg',
       'backgroundColor': '#ffffff',
       'videoLink': 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
       'previewVideoLink': 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
