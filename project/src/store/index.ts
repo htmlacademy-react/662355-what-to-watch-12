@@ -1,17 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { reducer } from './reducer';
 import { createAPI } from '../services/api';
 import { redirect } from './middleware/redirect';
+import { rootReducer } from './root-reducer';
 
 const api = createAPI();
 
 export const store = configureStore({
-  reducer,
+  reducer: rootReducer,
   devTools: true,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {
-        extraArgument: api
+        extraArgument: api,
       },
     }).concat(redirect),
 });

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Film } from '../../types/film';
 import Logo from '../logo/logo';
 import PromoButtons from '../promo-buttons/promo-buttons';
@@ -8,7 +9,7 @@ type PromoProps = {
   filmsFavourite: number;
 }
 
-export default function Promo({ film, filmsFavourite }: PromoProps): JSX.Element {
+function Promo({ film, filmsFavourite }: PromoProps): JSX.Element {
   return (
 
     <section className="film-card">
@@ -33,6 +34,6 @@ export default function Promo({ film, filmsFavourite }: PromoProps): JSX.Element
         </div>
       </div>
     </section >);
-
 }
 
+export default memo(Promo);

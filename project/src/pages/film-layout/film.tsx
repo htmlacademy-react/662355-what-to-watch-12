@@ -11,13 +11,14 @@ import { useEffect } from 'react';
 import { withFilmLoading } from '../../components/hoc/with-film-loading';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviews, fetchSimilarFilms } from '../../store/api-action';
+import { getReviews, getSimilarFilms } from '../../store/film-porcess/selectors';
 
 function FilmScreen({ film }: WithFilmProps) {
   const location = useLocation();
-  const reviews = useAppSelector((state) => state.reviews);
+  const reviews = useAppSelector(getReviews);
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const similarFilms = useAppSelector((state) => state.similarFilms);
+  const similarFilms = useAppSelector(getSimilarFilms);
 
   useEffect(() => {
     if (id) {

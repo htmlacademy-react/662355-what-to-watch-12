@@ -1,8 +1,9 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 type LogoProps = { isLight?: boolean };
 
-export default function Logo({ isLight = false }: LogoProps): JSX.Element {
+function Logo({ isLight = false }: LogoProps): JSX.Element {
   return (
     <div className="logo">
       <Link to="/" className={isLight ? 'logo__link logo__link--light' : 'logo__link'}>
@@ -13,3 +14,6 @@ export default function Logo({ isLight = false }: LogoProps): JSX.Element {
     </div>
   );
 }
+
+
+export default memo(Logo);

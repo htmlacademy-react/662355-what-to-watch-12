@@ -15,13 +15,14 @@ import Loading from '../../pages/loading/loading';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import { HelmetProvider } from 'react-helmet-async';
-import { AuthorizationStatus } from '../../const';
+import { getFilms } from '../../store/app-process/selectors';
+import { getAuthCheckedStatus } from '../../store/user-process/selectors';
 
 function App(): JSX.Element {
-  const films = useAppSelector((state) => state.films);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const films = useAppSelector(getFilms);
+  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
 
-  if (films.length === 0 && authorizationStatus === AuthorizationStatus.UNKNOWN) {
+  if (films.length === 0 && isAuthChecked) {
     return <Loading />;
   }
 
