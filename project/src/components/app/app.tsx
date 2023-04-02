@@ -6,23 +6,21 @@ import AddRewiewScreen from '../../pages/add-rewiew/add-rewiew';
 import PlayerScreen from '../../pages/player/pleyer';
 import NotFoundScreen from '../../pages/not-found/not-found';
 import PrivateRoute from '../private-route';
-import { Films } from '../../types/film';
 import { Reviews as ReviewsType } from '../../types/review';
 import { User } from '../../types/user';
 import FilmScreen from '../../pages/film-layout/film';
 import Overview from '../overview.tsx/overview';
 import Details from '../details/details';
 import Reviews from '../reviews/reviews';
+import { useAppSelector } from '../../hooks';
 
 type AppScreenProps = {
-  films: Films;
   reviews: ReviewsType;
   user: User;
 }
 
-function App({
-  films, reviews, user
-}: AppScreenProps): JSX.Element {
+function App({ reviews, user }: AppScreenProps): JSX.Element {
+  const films = useAppSelector((state) => state.films);
   return (
     <BrowserRouter>
       <Routes>

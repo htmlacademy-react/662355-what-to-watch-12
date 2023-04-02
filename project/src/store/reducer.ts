@@ -1,10 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Films } from '../types/film';
-import { changeFilms, changeGenre } from './action';
+import { changeFilms, changeGenre, loadingFilmsFinished } from './action';
 
 const initialState = {
   genre: 'All genres',
-  films: [] as Films
+  films: [] as Films,
+  isLoadingFilms: true,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -13,7 +14,10 @@ const reducer = createReducer(initialState, (builder) => {
       state.genre = action.payload.genre;
     })
     .addCase(changeFilms, (state, action) => {
-      state.films = action.payload.films;
+      state.films = action.payload;
+    })
+    .addCase(loadingFilmsFinished, (state) => {
+      state.isLoadingFilms = false;
     });
 });
 
