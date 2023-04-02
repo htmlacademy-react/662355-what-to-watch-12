@@ -1,21 +1,11 @@
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AddComment from '../../components/add-comment/add-comment';
 import Logo from '../../components/logo/logo';
 import UserIcon from '../../components/user/user';
-import { useFilmByParamId } from '../../hooks';
-import { Films } from '../../types/film';
+import { WithFilmProps } from '../../types/film';
+import { withFilmLoading } from '../../components/hoc/with-film-loading';
 
-type AddRewiewScreenProps = {
-  films: Films;
-};
-
-export default function AddRewiewScreen({ films }: AddRewiewScreenProps): JSX.Element {
-  const film = useFilmByParamId(films);
-
-  if (!film) {
-    return <Navigate to="/" />;
-  }
-
+function AddRewiewScreen({ film }: WithFilmProps): JSX.Element {
   return (
     <section className="film-card film-card--full" style={{ background: film.backgroundColor }}>
       <div className="film-card__header">
@@ -48,10 +38,11 @@ export default function AddRewiewScreen({ films }: AddRewiewScreenProps): JSX.El
       </div>
 
       <div className="add-review">
-        <AddComment />
+        <AddComment filmId={film.id} />
       </div>
 
     </ section>
   );
-
 }
+
+export default withFilmLoading(AddRewiewScreen);

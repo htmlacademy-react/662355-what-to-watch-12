@@ -1,16 +1,10 @@
-import { Navigate, useParams } from 'react-router-dom';
-import { Reviews as ReviewsType } from '../../types/review';
 import ReviewCard from '../review/review';
+import { useFilmContext } from '../../hooks';
 
-type ReviewProps = {
-  reviews: ReviewsType;
-}
+export default function Reviews(): JSX.Element {
 
-export default function Reviews({ reviews }: ReviewProps): JSX.Element {
-  const { id } = useParams();
-  if (!id) {
-    return <Navigate to={'/'} />;
-  }
+  const { reviews } = useFilmContext();
+
   const len = reviews.length;
   const column = (start: number, end: number) => reviews.slice(start, end).map((review) => <ReviewCard key={review.id} review={review} />);
   return (

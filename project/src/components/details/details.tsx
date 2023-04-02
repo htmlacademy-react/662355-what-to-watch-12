@@ -1,17 +1,8 @@
-import { Navigate } from 'react-router-dom';
-import { useFilmByParamId } from '../../hooks';
-import { Films } from '../../types/film';
+import { useFilmContext } from '../../hooks';
 import { formatDuration } from '../../utils';
 
-type DetailsProps = {
-  films: Films;
-}
-
-export default function Details({ films }: DetailsProps): JSX.Element {
-  const film = useFilmByParamId(films);
-  if (!film) {
-    return <Navigate to="/" />;
-  }
+export default function Details(): JSX.Element {
+  const { film } = useFilmContext();
 
   return (
     <div className="film-card__text film-card__row" >

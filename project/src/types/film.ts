@@ -1,13 +1,13 @@
 
 export type Film = {
-  id: number ;
+  id: number;
   name: string;
   posterImage: string;
   previewImage: string;
   backgroundImage: string;
   backgroundColor: string;
   videoLink: string;
-  previewVideoLink:string;
+  previewVideoLink: string;
   description: string;
   rating: number;
   scoresCount: number;
@@ -20,3 +20,5 @@ export type Film = {
 }
 
 export type Films = Film[];
+
+export type WithFilmProps = { film: Film };

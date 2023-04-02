@@ -1,7 +1,7 @@
 
 export type Review = {
   comment: string;
-  date: Date;
+  date: string;
   id: number;
   rating: number;
   user: {
@@ -9,4 +9,13 @@ export type Review = {
     name: string;
   };
 }
+
 export type Reviews = Review[];
+
+export type ReviewData = {
+  filmId: number;
+  review: {
+    rating: number;
+    comment: string;
+  };
+}

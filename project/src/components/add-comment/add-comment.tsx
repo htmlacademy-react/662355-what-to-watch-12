@@ -1,45 +1,59 @@
-import { ChangeEvent, useState } from 'react';
+import { MouseEvent, useState } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { saveReview } from '../../store/api-action';
+import Star from '../star/star';
+import { ChangeEvent } from 'react';
 
-export default function AddComment(): JSX.Element {
-  const [formData, setFormData] = useState({
-    rating: -1,
-    text: '',
-  });
-  const onChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
-    evt.preventDefault();
-    setFormData({
-      ...formData,
-      rating: +evt.target.value,
-    });
+type AddCommentProps = {
+  filmId: number;
+}
+
+export default function AddComment({ filmId }: AddCommentProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const [comment, setComment] = useState('');
+  const [rating, setRating] = useState(0);
+  const [disabled, setDisabled] = useState(false);
+
+  const onChangeRating = (evt: ChangeEvent<HTMLInputElement>) => {
+    setRating(parseInt(evt.target.value, 10));
   };
 
   const onChangeComment = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    evt.preventDefault();
-    setFormData({
-      ...formData,
-      text: evt.target.value,
-    });
+    setComment(evt.target.value);
   };
-  const starInputs = [];
-  for (let i = 1; i <= 10; i++) {
-    starInputs.push(
-      <>
-        <input className="rating__input" id={`star-${i}`} type="radio" name="rating" value={i} onChange={onChangeHandler} checked={formData.rating === i} key={`input-${i}`} />
-        <label className="rating__label" htmlFor={`star-${i}`} key={`label-${i}`}>Rating {i}</label>
-      </>);
-  }
+
+  const onSubmit = (evt: MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    if (rating > 0 && comment.length > 0) {
+      setDisabled(true);
+      dispatch(saveReview({
+        reviewData: {
+          filmId: filmId,
+          review: {
+            rating: parseInt(rating.toString(), 10),
+            comment: comment,
+          }
+        },
+        onFinish: () => setDisabled(false),
+      }));
+    }
+  };
+
+  const isDisableButton = (): boolean => disabled || rating === 0 || comment.length < 50 || comment.length > 400;
+
+  const stars = Array.from({ length: 10 }, (_, i) => <Star value={i + 1} key={`star-${i + 1}`} onChange={onChangeRating} disabled={disabled} />).reverse();
   return (
     <form action="#" className="add-review__form">
       <div className="rating">
         <div className="rating__stars">
-          {starInputs}
+          {stars}
         </div>
       </div>
 
       <div className="add-review__text" style={{ background: 'rgba(255,255,255,0.25)' }}>
-        <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={formData.text} onChange={onChangeComment}></textarea>
+        <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={comment} onChange={onChangeComment} disabled={disabled}></textarea>
         <div className="add-review__submit">
-          <button className="add-review__btn" type="submit">Post</button>
+          <button className="add-review__btn" type="submit" onClick={onSubmit} disabled={isDisableButton()}>Post</button>
         </div>
 
       </div>

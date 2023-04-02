@@ -1,26 +1,31 @@
-import { Navigate, Outlet, useLocation, } from 'react-router-dom';
+import { Outlet, useLocation, useParams, } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import PromoButtons from '../../components/promo-buttons/promo-buttons';
 import SameFilms from '../../components/same-films/same-films';
 import Tabs from '../../components/tabs/tabs';
 import UserIcon from '../../components/user/user';
-import { useFilmByParamId } from '../../hooks';
-import { Films } from '../../types/film';
+import { WithFilmProps } from '../../types/film';
 import { TypeOfTab } from '../../const';
+import { useEffect } from 'react';
+import { withFilmLoading } from '../../components/hoc/with-film-loading';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchReviews, fetchSimilarFilms } from '../../store/api-action';
 
-type FilmScreenProps = {
-  films: Films;
-}
-
-export default function FilmScreen({ films }: FilmScreenProps) {
+function FilmScreen({ film }: WithFilmProps) {
   const location = useLocation();
-  const film = useFilmByParamId(films);
-  if (!film) {
-    return <Navigate to="/" />;
-  }
+  const reviews = useAppSelector((state) => state.reviews);
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+  const similarFilms = useAppSelector((state) => state.similarFilms);
 
-  const sameFilms = films.filter((filmEl) => filmEl.id !== film.id && filmEl.genre === film.genre).slice(0, 4);
+  useEffect(() => {
+    if (id) {
+      const filmId = parseInt(id, 10);
+      dispatch(fetchSimilarFilms(filmId));
+      dispatch(fetchReviews(filmId));
+    }
+  }, [id]);
 
   function getType(pathname: string): TypeOfTab {
     const tab = pathname.slice(pathname.lastIndexOf('/') + 1, pathname.length);
@@ -31,7 +36,6 @@ export default function FilmScreen({ films }: FilmScreenProps) {
       default:
         return TypeOfTab.OVERVIEW;
     }
-
   }
 
   return (
@@ -50,7 +54,7 @@ export default function FilmScreen({ films }: FilmScreenProps) {
             <UserIcon />
           </header>
           <div className="film-card__wrap">
-            <PromoButtons film={film} filmsFavourite={films.filter((filmElem) => filmElem.isFavorite).length} isShowAddReview />
+            <PromoButtons film={film} filmsFavourite={0} />
           </div>
         </div>
 
@@ -61,7 +65,7 @@ export default function FilmScreen({ films }: FilmScreenProps) {
             </div>
 
             <Tabs id={film.id} choosedTabs={getType(location.pathname)}>
-              <Outlet />
+              <Outlet context={{ film, reviews }} />
             </Tabs>
 
           </div>
@@ -69,10 +73,11 @@ export default function FilmScreen({ films }: FilmScreenProps) {
       </section>
 
       <div className="page-content">
-        <SameFilms films={sameFilms} />
+        <SameFilms films={similarFilms} />
         <Footer />
       </div>
     </>
   );
-
 }
+
+export default withFilmLoading(FilmScreen);

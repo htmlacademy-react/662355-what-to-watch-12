@@ -12,6 +12,7 @@ export enum ApiRoute {
   FILMS = '/films',
   LOGIN = '/login',
   LOGOUT = '/logout',
+  COMMENTS = '/comments',
 }
 
 export enum AuthorizationStatus {
@@ -19,3 +20,5 @@ export enum AuthorizationStatus {
   NO_AUTH = 'NO_AUTH',
   UNKNOWN = 'UNKNOWN',
 }
+
+export const COUNT_FILMS_IN_SIMILAR_LIST = 4;
