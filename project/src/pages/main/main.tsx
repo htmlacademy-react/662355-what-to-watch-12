@@ -17,14 +17,14 @@ type MainProps = {
 export default function MainScreen({ user }: MainProps): JSX.Element {
   const films = useAppSelector((state) => state.films);
   const genre = useAppSelector((state) => state.genre);
-  const [filmsByGenre, setFilmsByGender] = useState(films);
+  const [filmsByGenre, setFilmsByGenre] = useState(films);
 
   useEffect(() => {
     let filteredFilms = films;
     if (genre !== ALL_GENRES) {
       filteredFilms = films.filter((film) => film.genre === genre);
     }
-    setFilmsByGender(filteredFilms);
+    setFilmsByGenre(filteredFilms);
   }, [genre, films]);
 
   return (
