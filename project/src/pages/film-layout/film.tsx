@@ -7,15 +7,13 @@ import Tabs from '../../components/tabs/tabs';
 import UserIcon from '../../components/user/user';
 import { useFilmByParamId } from '../../hooks';
 import { Films } from '../../types/film';
-import { User } from '../../types/user';
 import { TypeOfTab } from '../../const';
 
 type FilmScreenProps = {
-  user: User;
   films: Films;
 }
 
-export default function FilmScreen({ user, films }: FilmScreenProps) {
+export default function FilmScreen({ films }: FilmScreenProps) {
   const location = useLocation();
   const film = useFilmByParamId(films);
   if (!film) {
@@ -49,7 +47,7 @@ export default function FilmScreen({ user, films }: FilmScreenProps) {
           <header className="page-header film-card__head">
             <Logo />
 
-            <UserIcon user={user} />
+            <UserIcon />
           </header>
           <div className="film-card__wrap">
             <PromoButtons film={film} filmsFavourite={films.filter((filmElem) => filmElem.isFavorite).length} isShowAddReview />
