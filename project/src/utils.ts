@@ -1,11 +1,5 @@
 
-enum TypeOfTab {
-  OVERVIEW = 'overview',
-  REVIEWS = 'reviews',
-  DETAILS = 'details'
-}
-
-function fotmatDuration(minutes: number) {
+function formatDuration(minutes: number) {
   if (minutes < 60) {
     return `${minutes}m`;
   } else {
@@ -15,5 +9,5 @@ function fotmatDuration(minutes: number) {
   }
 }
 
-export { fotmatDuration, TypeOfTab };
+export { formatDuration };
 

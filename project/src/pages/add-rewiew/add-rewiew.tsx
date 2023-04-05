@@ -2,7 +2,7 @@ import { Link, Navigate } from 'react-router-dom';
 import AddComment from '../../components/add-comment/add-comment';
 import Logo from '../../components/logo/logo';
 import UserIcon from '../../components/user/user';
-import { useFilmByParamId } from '../../hooks/use-film-by-param-id';
+import { useFilmByParamId } from '../../hooks';
 import { Films } from '../../types/film';
 import { User } from '../../types/user';
 

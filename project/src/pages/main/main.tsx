@@ -1,18 +1,32 @@
+import { useEffect, useState } from 'react';
 import { FilmList } from '../../components/film-list/film-list';
 import Footer from '../../components/footer/footer';
+import GenreList from '../../components/genre-list/genre-list';
 import Logo from '../../components/logo/logo';
 import Promo from '../../components/promo/promo';
 import UserIcon from '../../components/user/user';
-import { Films } from '../../types/film';
+import { useAppSelector } from '../../hooks';
 import { User } from '../../types/user';
+import { ALL_GENRES } from '../../const';
 
 
 type MainProps = {
-  films: Films;
   user: User;
 }
 
-export default function MainScreen({ films, user }: MainProps): JSX.Element {
+export default function MainScreen({ user }: MainProps): JSX.Element {
+  const films = useAppSelector((state) => state.films);
+  const genre = useAppSelector((state) => state.genre);
+  const [filmsByGenre, setFilmsByGenre] = useState(films);
+
+  useEffect(() => {
+    let filteredFilms = films;
+    if (genre !== ALL_GENRES) {
+      filteredFilms = films.filter((film) => film.genre === genre);
+    }
+    setFilmsByGenre(filteredFilms);
+  }, [genre, films]);
+
   return (
     <>
       <section className="film-card">
@@ -35,40 +49,8 @@ export default function MainScreen({ films, user }: MainProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#/" className="catalog__genres-link">All genres</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#/" className="catalog__genres-link">Comedies</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#/" className="catalog__genres-link">Crime</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#/" className="catalog__genres-link">Documentary</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#/" className="catalog__genres-link">Dramas</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#/" className="catalog__genres-link">Horror</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#/" className="catalog__genres-link">Kids & Family</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#/" className="catalog__genres-link">Romance</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#/" className="catalog__genres-link">Sci-Fi</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#/" className="catalog__genres-link">Thrillers</a>
-            </li>
-          </ul>
-
-          <FilmList films={films} />
+          <GenreList films={films} />
+          <FilmList films={filmsByGenre} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

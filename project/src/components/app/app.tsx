@@ -26,7 +26,7 @@ function App({
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={< MainScreen films={films} user={user} />} />
+        <Route path='/' element={<MainScreen user={user} />} />
         <Route path='/login' element={<SignInScreen />} />
         <Route path='/mylist' element={
           <PrivateRoute hasAccess>
