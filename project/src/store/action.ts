@@ -3,4 +3,4 @@ import { Films } from '../types/film';
 
 export const changeGenre = createAction<{ genre: string }>('changeGenre');
 export const changeFilms = createAction<Films>('changeFilms');
-export const loadingFilmsFinished = createAction('loadingFilmsFinished');
+export const changeLoading = createAction<boolean>('changeLoading');

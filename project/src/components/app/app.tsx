@@ -13,6 +13,7 @@ import Overview from '../overview.tsx/overview';
 import Details from '../details/details';
 import Reviews from '../reviews/reviews';
 import { useAppSelector } from '../../hooks';
+import Loading from '../../pages/loading/loading';
 
 type AppScreenProps = {
   reviews: ReviewsType;
@@ -21,6 +22,12 @@ type AppScreenProps = {
 
 function App({ reviews, user }: AppScreenProps): JSX.Element {
   const films = useAppSelector((state) => state.films);
+  const isLoading = useAppSelector((state) => state.isLoading);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <BrowserRouter>
       <Routes>

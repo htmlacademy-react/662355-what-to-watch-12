@@ -6,8 +6,6 @@ import Promo from '../../components/promo/promo';
 import { useAppSelector } from '../../hooks';
 import { User } from '../../types/user';
 import { ALL_GENRES } from '../../const';
-import Loading from '../loading/loading';
-
 
 type MainProps = {
   user: User;
@@ -17,7 +15,6 @@ export default function MainScreen({ user }: MainProps): JSX.Element {
   const films = useAppSelector((state) => state.films);
   const genre = useAppSelector((state) => state.genre);
   const [filmsByGenre, setFilmsByGenre] = useState(films);
-  const isLoading = useAppSelector((state) => state.isLoadingFilms);
 
   useEffect(() => {
     let filteredFilms = films;
@@ -26,10 +23,6 @@ export default function MainScreen({ user }: MainProps): JSX.Element {
     }
     setFilmsByGenre(filteredFilms);
   }, [genre, films]);
-
-  if (isLoading) {
-    return (<Loading />);
-  }
 
   return (
     <>
