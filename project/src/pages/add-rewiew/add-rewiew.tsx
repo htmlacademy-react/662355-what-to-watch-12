@@ -3,7 +3,7 @@ import AddComment from '../../components/add-comment/add-comment';
 import Logo from '../../components/logo/logo';
 import UserIcon from '../../components/user/user';
 import { WithFilmProps } from '../../types/film';
-import { withFilmLoading } from '../../components/hoc/with-film-loading';
+import { withFilmLoading } from '../../components/hocs/with-film-loading';
 
 function AddRewiewScreen({ film }: WithFilmProps): JSX.Element {
   return (

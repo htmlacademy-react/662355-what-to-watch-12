@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppProcess } from '../../types/store';
 import { NameSpace } from '../../const';
-import { fetchFilms } from '../api-action';
+import { addFavoriteFilm, fetchFavoriteFilms, fetchFilms } from '../api-action';
+import { Film } from '../../types/film';
 
 const initialState: AppProcess = {
   films: [],
@@ -23,6 +24,23 @@ export const appProcess = createSlice({
       })
       .addCase(fetchFilms.rejected, (state) => {
         state.films = [];
+      })
+      .addCase(fetchFavoriteFilms.fulfilled, (state, action) => {
+        const idToFilm = action.payload.reduce((map, film) => {
+          map.set(film.id, film);
+          return map;
+        }, new Map<number, Film>());
+
+        state.films.map((film) => {
+          if (idToFilm.has(film.id)) {
+            return idToFilm.get(film.id);
+          }
+          return film;
+        });
+      })
+      .addCase(addFavoriteFilm.fulfilled, (state, action) => {
+        const i = state.films.findIndex((film) => film.id === action.payload.id);
+        state.films[i] = action.payload;
       });
   },
 });
