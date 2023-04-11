@@ -19,7 +19,7 @@ export default function FilmCard({ film, onMouseEnter, isPlaying, onMouseLeave, 
           isReset ? <img src={film.previewImage} alt={film.name} width="280" height="175" />
             :
             < VideoPlayer
-              src={film.videoLink}
+              src={film.previewVideoLink}
               isPlaying={isPlaying}
               width={280}
               height={175}

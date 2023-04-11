@@ -19,7 +19,7 @@ export default function AddRewiewScreen({ films, user }: AddRewiewScreenProps): 
   }
 
   return (
-    <section className="film-card film-card--full">
+    <section className="film-card film-card--full" style={{ background: film.backgroundColor }}>
       <div className="film-card__header">
         <div className="film-card__bg">
           <img src={film.backgroundImage} alt={film.name} />
@@ -53,7 +53,7 @@ export default function AddRewiewScreen({ films, user }: AddRewiewScreenProps): 
         <AddComment />
       </div>
 
-    </section>
+    </ section>
   );
 
 }

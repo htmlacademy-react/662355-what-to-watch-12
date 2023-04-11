@@ -38,7 +38,7 @@ export default function FilmScreen({ user, films }: FilmScreenProps) {
 
   return (
     <>
-      <section className="film-card film-card--full">
+      <section className="film-card film-card--full" style={{ background: film.backgroundColor }}>
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img src={film.backgroundImage} alt={film.name} />
@@ -59,7 +59,7 @@ export default function FilmScreen({ user, films }: FilmScreenProps) {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film.backgroundImage} alt={film.name} width="218" height="327" />
+              <img src={film.posterImage} alt={film.name} width="218" height="327" />
             </div>
 
             <Tabs id={film.id} choosedTabs={getType(location.pathname)}>

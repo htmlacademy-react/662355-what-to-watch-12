@@ -36,7 +36,7 @@ export default function AddComment(): JSX.Element {
         </div>
       </div>
 
-      <div className="add-review__text">
+      <div className="add-review__text" style={{ background: 'rgba(255,255,255,0.25)' }}>
         <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={formData.text} onChange={onChangeComment}></textarea>
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit">Post</button>

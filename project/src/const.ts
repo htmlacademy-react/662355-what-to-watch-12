@@ -7,3 +7,7 @@ export enum TypeOfTab {
 }
 
 export const FILMS_COUNT_STEP = 8;
+
+export enum ApiRoute {
+  FILMS = '/films'
+}
