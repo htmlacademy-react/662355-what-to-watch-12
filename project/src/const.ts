@@ -9,5 +9,13 @@ export enum TypeOfTab {
 export const FILMS_COUNT_STEP = 8;
 
 export enum ApiRoute {
-  FILMS = '/films'
+  FILMS = '/films',
+  LOGIN = '/login',
+  LOGOUT = '/logout',
+}
+
+export enum AuthorizationStatus {
+  AUTH = 'AUTH',
+  NO_AUTH = 'NO_AUTH',
+  UNKNOWN = 'UNKNOWN',
 }

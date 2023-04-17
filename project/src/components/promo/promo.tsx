@@ -1,5 +1,4 @@
 import { Film } from '../../types/film';
-import { User } from '../../types/user';
 import Logo from '../logo/logo';
 import PromoButtons from '../promo-buttons/promo-buttons';
 import UserIcon from '../user/user';
@@ -7,10 +6,9 @@ import UserIcon from '../user/user';
 type PromoProps = {
   film: Film;
   filmsFavourite: number;
-  user: User;
 }
 
-export default function Promo({ film, filmsFavourite, user }: PromoProps): JSX.Element {
+export default function Promo({ film, filmsFavourite }: PromoProps): JSX.Element {
   return (
 
     <section className="film-card">
@@ -23,7 +21,7 @@ export default function Promo({ film, filmsFavourite, user }: PromoProps): JSX.E
       <header className="page-header film-card__head">
         <Logo />
 
-        <UserIcon user={user} />
+        <UserIcon />
       </header>
 
       <div className="film-card__wrap">

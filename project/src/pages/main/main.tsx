@@ -4,14 +4,9 @@ import Footer from '../../components/footer/footer';
 import GenreList from '../../components/genre-list/genre-list';
 import Promo from '../../components/promo/promo';
 import { useAppSelector } from '../../hooks';
-import { User } from '../../types/user';
 import { ALL_GENRES } from '../../const';
 
-type MainProps = {
-  user: User;
-}
-
-export default function MainScreen({ user }: MainProps): JSX.Element {
+export default function MainScreen(): JSX.Element {
   const films = useAppSelector((state) => state.films);
   const genre = useAppSelector((state) => state.genre);
   const [filmsByGenre, setFilmsByGenre] = useState(films);
@@ -26,7 +21,7 @@ export default function MainScreen({ user }: MainProps): JSX.Element {
 
   return (
     <>
-      {films.length > 0 && <Promo user={user} film={films[0]} filmsFavourite={films.filter((film) => film.isFavorite).length} />}
+      {films.length > 0 && <Promo film={films[0]} filmsFavourite={films.filter((film) => film.isFavorite).length} />}
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>

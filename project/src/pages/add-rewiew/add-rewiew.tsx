@@ -4,14 +4,12 @@ import Logo from '../../components/logo/logo';
 import UserIcon from '../../components/user/user';
 import { useFilmByParamId } from '../../hooks';
 import { Films } from '../../types/film';
-import { User } from '../../types/user';
 
 type AddRewiewScreenProps = {
   films: Films;
-  user: User;
 };
 
-export default function AddRewiewScreen({ films, user }: AddRewiewScreenProps): JSX.Element {
+export default function AddRewiewScreen({ films }: AddRewiewScreenProps): JSX.Element {
   const film = useFilmByParamId(films);
 
   if (!film) {
@@ -41,7 +39,7 @@ export default function AddRewiewScreen({ films, user }: AddRewiewScreenProps): 
             </ul>
           </nav>
 
-          <UserIcon user={user} />
+          <UserIcon />
         </header>
 
         <div className="film-card__poster film-card__poster--small">
