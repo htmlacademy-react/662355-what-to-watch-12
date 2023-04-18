@@ -12,6 +12,7 @@ export type UserProcess = {
 
 export type AppProcess = {
   films: Films;
+  promoFilm: Film | null;
   genre: string;
 }
 

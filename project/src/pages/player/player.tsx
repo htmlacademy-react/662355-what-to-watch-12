@@ -50,6 +50,7 @@ function PlayerScreen({ film }: WithFilmProps) {
         poster={film.backgroundImage}
         onDurationChange={onChangeDuration}
         onTimeUpdate={onTimeUpdate}
+        autoPlay
       />
 
       <button type="button" className="player__exit" onClick={() => navigate(-1)}>Exit</button>

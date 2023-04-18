@@ -99,3 +99,11 @@ export const addFavoriteFilm = createAsyncThunk<Film, { filmId: number; status: 
     return data;
   }
 );
+
+export const fetchPromo = createAsyncThunk<Film, undefined, AppThunk>(
+  'fetchPromo',
+  async (_arg, { extra: api }) => {
+    const { data } = await api.get<Film>(ApiRoute.PROMO);
+    return data;
+  }
+);

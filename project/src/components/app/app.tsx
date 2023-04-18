@@ -22,7 +22,7 @@ function App(): JSX.Element {
   const films = useAppSelector(getFilms);
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
 
-  if (films.length === 0 && isAuthChecked) {
+  if (films.length === 0 && !isAuthChecked) {
     return <Loading />;
   }
 
