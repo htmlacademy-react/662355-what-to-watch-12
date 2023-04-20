@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppThunk } from '../types/store';
-import { changeAuthorizationStatus, changeFilms, changeUser, redirectToRoute } from './action';
-import { Films } from '../types/film';
+import { changeAuthorizationStatus, changeFilms, changeSimilarFilms, changeUser, changeFilm, redirectToRoute, changeReviews } from './action';
+import { Film, Films } from '../types/film';
 import { ApiRoute, AuthorizationStatus } from '../const';
 import { AuthData } from '../types/auth';
 import { User } from '../types/user';
 import { dropToken, saveToken } from '../services/token';
+import { ReviewData, Reviews } from '../types/review';
 
 export const fetchFilms = createAsyncThunk<void, undefined, AppThunk>(
   'fetchFilms',
@@ -13,6 +14,15 @@ export const fetchFilms = createAsyncThunk<void, undefined, AppThunk>(
     const { data } = await api.get<Films>(ApiRoute.FILMS);
     dispatch(changeFilms(data));
   },
+);
+
+export const fetchFilm = createAsyncThunk<void, number, AppThunk>(
+  'fetchFilm',
+  async (filmId, { dispatch, extra: api }) => {
+    dispatch(changeFilm(null));
+    const { data } = await api.get<Film>(`${ApiRoute.FILMS}/${filmId}`);
+    dispatch(changeFilm(data));
+  }
 );
 
 export const login = createAsyncThunk<void, undefined, AppThunk>(
@@ -45,4 +55,39 @@ export const authorize = createAsyncThunk<void, AuthData, AppThunk>(
     dispatch(changeAuthorizationStatus(AuthorizationStatus.AUTH));
     dispatch(redirectToRoute('/'));
   },
+);
+
+export const fetchSimilarFilms = createAsyncThunk<void, number, AppThunk>(
+  'fetchSimilarFilms',
+  async (filmId, { dispatch, extra: api }) => {
+    dispatch(changeSimilarFilms([]));
+    const { data } = await api.get<Films>(`${ApiRoute.FILMS}/${filmId}/similar`);
+    dispatch(changeSimilarFilms(data));
+  }
+);
+
+export const fetchReviews = createAsyncThunk<void, number, AppThunk>(
+  'fetchReviews',
+  async (filmId, { dispatch, extra: api }) => {
+    dispatch(changeReviews([]));
+    const { data } = await api.get<Reviews>(`${ApiRoute.COMMENTS}/${filmId}`);
+    dispatch(changeReviews(data));
+  }
+);
+
+type SaveReviewType = {
+  reviewData: ReviewData;
+  onFinish: () => void;
+}
+
+export const saveReview = createAsyncThunk<void, SaveReviewType, AppThunk>(
+  'saveReview',
+  async ({ reviewData: { filmId, review }, onFinish }, { dispatch, extra: api }) => {
+    try {
+      await api.post(`${ApiRoute.COMMENTS}/${filmId}`, review);
+      dispatch(redirectToRoute(`${ApiRoute.FILMS}/${filmId}`));
+    } finally {
+      onFinish();
+    }
+  }
 );

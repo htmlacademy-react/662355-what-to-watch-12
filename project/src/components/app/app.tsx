@@ -6,7 +6,6 @@ import AddRewiewScreen from '../../pages/add-rewiew/add-rewiew';
 import PlayerScreen from '../../pages/player/pleyer';
 import NotFoundScreen from '../../pages/not-found/not-found';
 import PrivateRoute from '../private-route';
-import { Reviews as ReviewsType } from '../../types/review';
 import FilmScreen from '../../pages/film-layout/film';
 import Overview from '../overview.tsx/overview';
 import Details from '../details/details';
@@ -18,16 +17,11 @@ import browserHistory from '../../browser-history';
 import { HelmetProvider } from 'react-helmet-async';
 import { AuthorizationStatus } from '../../const';
 
-type AppScreenProps = {
-  reviews: ReviewsType;
-}
-
-function App({ reviews }: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   const films = useAppSelector((state) => state.films);
-  const isLoading = useAppSelector((state) => state.isLoading);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  if (isLoading && films.length === 0 && authorizationStatus === AuthorizationStatus.NO_AUTH) {
+  if (films.length === 0 && authorizationStatus === AuthorizationStatus.UNKNOWN) {
     return <Loading />;
   }
 
@@ -43,11 +37,11 @@ function App({ reviews }: AppScreenProps): JSX.Element {
             </PrivateRoute>
           }
           />
-          <Route path='/films/:id/review' element={<AddRewiewScreen films={films} />} />
-          <Route path='/films/:id' element={<FilmScreen films={films} />} >
-            <Route index element={<Overview films={films} />} />
-            <Route path='details' element={<Details films={films} />} />
-            <Route path='reviews' element={<Reviews reviews={reviews} />} />
+          <Route path='/films/:id/review' element={<AddRewiewScreen />} />
+          <Route path='/films/:id' element={<FilmScreen />} >
+            <Route index element={<Overview />} />
+            <Route path='details' element={<Details />} />
+            <Route path='reviews' element={<Reviews />} />
           </Route>
 
           <Route path='/player/:id' element={<PlayerScreen films={films} />} />

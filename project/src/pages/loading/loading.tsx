@@ -1,6 +1,9 @@
 
+
 export default function Loading(): JSX.Element {
   return (
-    <p>Loading...</p>
+    <section className="page-content">
+      <p>Loading...</p>
+    </section>
   );
 }

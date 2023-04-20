@@ -1,16 +1,8 @@
-import { Navigate } from 'react-router-dom';
-import { useFilmByParamId } from '../../hooks';
-import { Films } from '../../types/film';
+import { useFilmContext } from '../../hooks';
 
-type OverviewProps = {
-  films: Films;
-}
 
-export default function Overview({ films }: OverviewProps): JSX.Element {
-  const film = useFilmByParamId(films);
-  if (!film) {
-    return <Navigate to="/" />;
-  }
+export default function Overview(): JSX.Element {
+  const { film } = useFilmContext();
 
   function convertRating(rating: number): string {
     if (rating <= 3) {
@@ -29,6 +21,7 @@ export default function Overview({ films }: OverviewProps): JSX.Element {
       return 'Awesome';
     }
   }
+
   return (
     <>
       <div className="film-rating">

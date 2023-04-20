@@ -1,14 +1,17 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Film } from '../../types/film';
+import { useAppSelector } from '../../hooks';
+import { AuthorizationStatus } from '../../const';
 
-type PromoButtonsProos = {
+type PromoButtonsProps = {
   film: Film;
   filmsFavourite: number;
-  isShowAddReview?: boolean;
 }
 
-export default function PromoButtons({ film, filmsFavourite, isShowAddReview = false }: PromoButtonsProos): JSX.Element {
+export default function PromoButtons({ film, filmsFavourite }: PromoButtonsProps): JSX.Element {
   const navigate = useNavigate();
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
   const handlerClickPlay = () => navigate(`/player/${film.id}`);
   return (
     <div className="film-card__desc">
@@ -32,7 +35,7 @@ export default function PromoButtons({ film, filmsFavourite, isShowAddReview = f
           <span>My list</span>
           <span className="film-card__count">{filmsFavourite}</span>
         </button>
-        {isShowAddReview ? <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link> : ''}
+        {authorizationStatus === AuthorizationStatus.AUTH ? <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link> : ''}
       </div>
     </div>);
 }

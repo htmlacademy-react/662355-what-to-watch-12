@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { reviews } from './mock/review';
 import { store } from './store';
 import { fetchFilms, login } from './store/api-action';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -16,7 +17,8 @@ store.dispatch(login());
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App reviews={reviews} />
+      <ToastContainer />
+      <App />
     </Provider>
   </React.StrictMode>,
 );
