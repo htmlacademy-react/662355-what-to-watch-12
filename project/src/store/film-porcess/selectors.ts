@@ -1,9 +1,10 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
-import { Film, Films } from '../../types/film';
-import { Reviews } from '../../types/review';
 import { State } from '../../types/store';
 
-export const getFilm = (state: State): Film | null => state[NameSpace.FILM].film;
-export const isLoadingFilm = (state: State): boolean => state[NameSpace.FILM].isLoadingFilm;
-export const getSimilarFilms = (state: State): Films => state[NameSpace.FILM].similarFilms;
-export const getReviews = (state: State): Reviews => state[NameSpace.FILM].reviews;
+const rootState = (state: State) => state[NameSpace.FILM];
+
+export const getFilm = createSelector(rootState, (state) => state.film);
+export const isLoadingFilm = createSelector(rootState, (state) => state.isLoadingFilm);
+export const getSimilarFilms = createSelector(rootState, (state) => state.similarFilms);
+export const getReviews = createSelector(rootState, (state) => state.reviews);

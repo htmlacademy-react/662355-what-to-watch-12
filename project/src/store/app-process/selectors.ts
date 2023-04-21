@@ -1,6 +1,8 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
-import { Films } from '../../types/film';
 import { State } from '../../types/store';
 
-export const getFilms = (state: State): Films => state[NameSpace.APP].films;
-export const getGenre = (state: State): string => state[NameSpace.APP].genre;
+const rootState = (state: State) => state[NameSpace.APP];
+
+export const getFilms = createSelector(rootState, (state) => state.films);
+export const getGenre = createSelector(rootState, (state) => state.genre);
