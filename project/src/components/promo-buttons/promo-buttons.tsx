@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Film } from '../../types/film';
 import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 type PromoButtonsProps = {
   film: Film;
@@ -10,7 +11,7 @@ type PromoButtonsProps = {
 
 export default function PromoButtons({ film, filmsFavourite }: PromoButtonsProps): JSX.Element {
   const navigate = useNavigate();
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const handlerClickPlay = () => navigate(`/player/${film.id}`);
   return (

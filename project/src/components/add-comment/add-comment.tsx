@@ -1,8 +1,8 @@
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useCallback, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { saveReview } from '../../store/api-action';
-import Star from '../star/star';
 import { ChangeEvent } from 'react';
+import Stars from '../stars/stars';
 
 type AddCommentProps = {
   filmId: number;
@@ -14,9 +14,9 @@ export default function AddComment({ filmId }: AddCommentProps): JSX.Element {
   const [rating, setRating] = useState(0);
   const [disabled, setDisabled] = useState(false);
 
-  const onChangeRating = (evt: ChangeEvent<HTMLInputElement>) => {
+  const onChangeRating = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
     setRating(parseInt(evt.target.value, 10));
-  };
+  }, []);
 
   const onChangeComment = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(evt.target.value);
@@ -41,12 +41,11 @@ export default function AddComment({ filmId }: AddCommentProps): JSX.Element {
 
   const isDisableButton = (): boolean => disabled || rating === 0 || comment.length < 50 || comment.length > 400;
 
-  const stars = Array.from({ length: 10 }, (_, i) => <Star value={i + 1} key={`star-${i + 1}`} onChange={onChangeRating} disabled={disabled} />).reverse();
   return (
     <form action="#" className="add-review__form">
       <div className="rating">
         <div className="rating__stars">
-          {stars}
+          <Stars onChange={onChangeRating} disabled={disabled} />
         </div>
       </div>
 

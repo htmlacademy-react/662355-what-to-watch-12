@@ -4,18 +4,23 @@ import { useParams } from 'react-router-dom';
 import Loading from '../../pages/loading/loading';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFilm } from '../../store/api-action';
+import { getFilm, isLoadingFilm } from '../../store/film-porcess/selectors';
 
 export const withFilmLoading = (Component: ComponentType<WithFilmProps>) =>
   function FilmLoading() {
-    const film = useAppSelector((state) => state.film);
+    const film = useAppSelector(getFilm);
+    const isLoading = useAppSelector(isLoadingFilm);
     const { id } = useParams();
     const dispatch = useAppDispatch();
 
     useEffect(() => {
       if (id) {
-        dispatch(fetchFilm(parseInt(id, 10)));
+        const filmId = parseInt(id, 10);
+        if (!film || film.id !== filmId) {
+          dispatch(fetchFilm(filmId));
+        }
       }
-    }, [id]);
+    }, [id, film]);
 
-    return film === null ? <Loading /> : <Component film={film} />;
+    return isLoading || !film ? <Loading /> : <Component film={film} />;
   };

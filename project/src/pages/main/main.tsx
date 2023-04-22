@@ -5,10 +5,11 @@ import GenreList from '../../components/genre-list/genre-list';
 import Promo from '../../components/promo/promo';
 import { useAppSelector } from '../../hooks';
 import { ALL_GENRES } from '../../const';
+import { getFilms, getGenre } from '../../store/app-process/selectors';
 
 export default function MainScreen(): JSX.Element {
-  const films = useAppSelector((state) => state.films);
-  const genre = useAppSelector((state) => state.genre);
+  const films = useAppSelector(getFilms);
+  const genre = useAppSelector(getGenre);
   const [filmsByGenre, setFilmsByGenre] = useState(films);
 
   useEffect(() => {

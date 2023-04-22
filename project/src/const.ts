@@ -22,3 +22,9 @@ export enum AuthorizationStatus {
 }
 
 export const COUNT_FILMS_IN_SIMILAR_LIST = 4;
+
+export enum NameSpace {
+  USER = 'user',
+  APP = 'app',
+  FILM = 'film',
+}

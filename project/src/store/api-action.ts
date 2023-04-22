@@ -1,77 +1,68 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppThunk } from '../types/store';
-import { changeAuthorizationStatus, changeFilms, changeSimilarFilms, changeUser, changeFilm, redirectToRoute, changeReviews } from './action';
+import { redirectToRoute } from './action';
 import { Film, Films } from '../types/film';
-import { ApiRoute, AuthorizationStatus } from '../const';
+import { ApiRoute } from '../const';
 import { AuthData } from '../types/auth';
 import { User } from '../types/user';
 import { dropToken, saveToken } from '../services/token';
 import { ReviewData, Reviews } from '../types/review';
 
-export const fetchFilms = createAsyncThunk<void, undefined, AppThunk>(
+export const fetchFilms = createAsyncThunk<Films, undefined, AppThunk>(
   'fetchFilms',
-  async (_arg, { dispatch, extra: api }) => {
+  async (_arg, { extra: api }) => {
     const { data } = await api.get<Films>(ApiRoute.FILMS);
-    dispatch(changeFilms(data));
+    return data;
   },
 );
 
-export const fetchFilm = createAsyncThunk<void, number, AppThunk>(
+export const fetchFilm = createAsyncThunk<Film, number, AppThunk>(
   'fetchFilm',
-  async (filmId, { dispatch, extra: api }) => {
-    dispatch(changeFilm(null));
+  async (filmId, { extra: api }) => {
     const { data } = await api.get<Film>(`${ApiRoute.FILMS}/${filmId}`);
-    dispatch(changeFilm(data));
+    return data;
   }
 );
 
 export const login = createAsyncThunk<void, undefined, AppThunk>(
   'login',
-  async (_arg, { dispatch, extra: api }) => {
-    try {
-      await api.get(ApiRoute.LOGIN);
-      dispatch(changeAuthorizationStatus(AuthorizationStatus.AUTH));
-    } catch (err) {
-      dispatch(changeAuthorizationStatus(AuthorizationStatus.NO_AUTH));
-    }
+  async (_arg, { extra: api }) => {
+    await api.get(ApiRoute.LOGIN);
   }
 );
 
 export const logout = createAsyncThunk<void, undefined, AppThunk>(
   'logout',
-  async (_arg, { dispatch, extra: api }) => {
+  async (_arg, { extra: api }) => {
     await api.delete(ApiRoute.LOGOUT);
     dropToken();
-    dispatch(changeAuthorizationStatus(AuthorizationStatus.NO_AUTH));
   }
 );
 
-export const authorize = createAsyncThunk<void, AuthData, AppThunk>(
+export const authorize = createAsyncThunk<User, AuthData, AppThunk>(
   'authorize',
   async (authorizationData, { dispatch, extra: api }) => {
     const { data } = await api.post<User>(ApiRoute.LOGIN, authorizationData);
     saveToken(data.token);
-    dispatch(changeUser(data));
-    dispatch(changeAuthorizationStatus(AuthorizationStatus.AUTH));
     dispatch(redirectToRoute('/'));
+    return data;
   },
 );
 
-export const fetchSimilarFilms = createAsyncThunk<void, number, AppThunk>(
+export const fetchSimilarFilms = createAsyncThunk<Films, number, AppThunk>(
   'fetchSimilarFilms',
-  async (filmId, { dispatch, extra: api }) => {
-    dispatch(changeSimilarFilms([]));
+  async (filmId, { extra: api }) => {
     const { data } = await api.get<Films>(`${ApiRoute.FILMS}/${filmId}/similar`);
-    dispatch(changeSimilarFilms(data));
+    return data;
   }
 );
 
-export const fetchReviews = createAsyncThunk<void, number, AppThunk>(
+export const fetchReviews = createAsyncThunk<Reviews, number, AppThunk>(
   'fetchReviews',
-  async (filmId, { dispatch, extra: api }) => {
-    dispatch(changeReviews([]));
+  async (filmId, { extra: api }) => {
+
     const { data } = await api.get<Reviews>(`${ApiRoute.COMMENTS}/${filmId}`);
-    dispatch(changeReviews(data));
+    return data;
   }
 );
 
