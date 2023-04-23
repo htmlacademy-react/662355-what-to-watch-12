@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import SignInScreen from '../../pages/sing-in/sign-in';
 import MyListScreen from '../../pages/my-list/my-list';
 import AddRewiewScreen from '../../pages/add-rewiew/add-rewiew';
-import PlayerScreen from '../../pages/player/pleyer';
+import PlayerScreen from '../../pages/player/player';
 import NotFoundScreen from '../../pages/not-found/not-found';
 import PrivateRoute from '../private-route';
 import FilmScreen from '../../pages/film-layout/film';
@@ -22,7 +22,7 @@ function App(): JSX.Element {
   const films = useAppSelector(getFilms);
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
 
-  if (films.length === 0 && isAuthChecked) {
+  if (films.length === 0 && !isAuthChecked) {
     return <Loading />;
   }
 
@@ -34,7 +34,7 @@ function App(): JSX.Element {
           <Route path='/login' element={<SignInScreen />} />
           <Route path='/mylist' element={
             <PrivateRoute>
-              <MyListScreen films={films} />
+              <MyListScreen />
             </PrivateRoute>
           }
           />
@@ -45,7 +45,7 @@ function App(): JSX.Element {
             <Route path='reviews' element={<Reviews />} />
           </Route>
 
-          <Route path='/player/:id' element={<PlayerScreen films={films} />} />
+          <Route path='/player/:id' element={<PlayerScreen />} />
           <Route path='*' element={<NotFoundScreen />} />
         </Routes>
       </HistoryRouter>

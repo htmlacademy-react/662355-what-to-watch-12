@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Film } from '../../types/film';
-import VideoPlayer from '../video-player/video-player';
+import { useEffect, useRef } from 'react';
 
 type FilmCardProperty = {
   film: Film;
@@ -12,27 +12,33 @@ type FilmCardProperty = {
 
 
 export default function FilmCard({ film, onMouseEnter, isPlaying, onMouseLeave, isReset }: FilmCardProperty): JSX.Element {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    if (!videoRef.current) {
+      return;
+    }
+
+    if (isPlaying) {
+      videoRef.current.play();
+    } else {
+      videoRef.current.currentTime = 0;
+    }
+
+  }, [isPlaying]);
+
   return (
     <article className="small-film-card catalog__films-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <div className="small-film-card__image">
         {
-          isReset ? <img src={film.previewImage} alt={film.name} width="280" height="175" />
-            :
-            < VideoPlayer
-              src={film.previewVideoLink}
-              isPlaying={isPlaying}
-              width={280}
-              height={175}
-              muted
-              poster={film.previewImage}
-              isReset={isReset}
-            />
+          isPlaying
+            ? <video ref={videoRef} src={film.previewVideoLink} width={280} height={175} poster={film.previewImage} muted />
+            : <img src={film.previewImage} alt={film.name} width="280" height="175" />
         }
       </div>
       <h3 className="small-film-card__title">
         <Link className="small-film-card__link" to={`/films/${film.id}`}>{film.name}</Link>
       </h3>
     </article>
-
   );
 }

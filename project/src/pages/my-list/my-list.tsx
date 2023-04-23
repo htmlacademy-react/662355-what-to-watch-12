@@ -2,13 +2,12 @@ import { FilmList } from '../../components/film-list/film-list';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import UserIcon from '../../components/user/user';
-import { Films } from '../../types/film';
+import { useAppSelector } from '../../hooks';
+import { getFavoriteFilms } from '../../store/app-process/selectors';
 
-type MyListScreenProps = {
-  films: Films;
-}
+export default function MyListScreen(): JSX.Element {
+  const films = useAppSelector(getFavoriteFilms);
 
-export default function MyListScreen({ films }: MyListScreenProps): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">

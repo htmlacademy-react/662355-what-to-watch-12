@@ -8,10 +8,11 @@ import UserIcon from '../../components/user/user';
 import { WithFilmProps } from '../../types/film';
 import { TypeOfTab } from '../../const';
 import { useEffect } from 'react';
-import { withFilmLoading } from '../../components/hoc/with-film-loading';
+import { withFilmLoading } from '../../components/hocs/with-film-loading';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviews, fetchSimilarFilms } from '../../store/api-action';
 import { getReviews, getSimilarFilms } from '../../store/film-porcess/selectors';
+import { getFavoriteFilms } from '../../store/app-process/selectors';
 
 function FilmScreen({ film }: WithFilmProps) {
   const location = useLocation();
@@ -19,6 +20,7 @@ function FilmScreen({ film }: WithFilmProps) {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const similarFilms = useAppSelector(getSimilarFilms);
+  const favoriteFilms = useAppSelector(getFavoriteFilms);
 
   useEffect(() => {
     if (id) {
@@ -55,7 +57,7 @@ function FilmScreen({ film }: WithFilmProps) {
             <UserIcon />
           </header>
           <div className="film-card__wrap">
-            <PromoButtons film={film} filmsFavourite={0} />
+            <PromoButtons film={film} filmsFavourite={favoriteFilms.length} />
           </div>
         </div>
 
