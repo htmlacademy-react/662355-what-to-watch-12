@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Film } from '../../types/film';
 import { useEffect, useRef } from 'react';
 
@@ -13,6 +13,7 @@ type FilmCardProperty = {
 
 export default function FilmCard({ film, onMouseEnter, isPlaying, onMouseLeave, isReset }: FilmCardProperty): JSX.Element {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!videoRef.current) {
@@ -27,8 +28,12 @@ export default function FilmCard({ film, onMouseEnter, isPlaying, onMouseLeave, 
 
   }, [isPlaying]);
 
+  const handleClick = () => {
+    navigate(`/films/${film.id}`);
+  };
+
   return (
-    <article className="small-film-card catalog__films-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <article className="small-film-card catalog__films-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} onClick={handleClick}>
       <div className="small-film-card__image">
         {
           isPlaying

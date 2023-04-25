@@ -9,7 +9,7 @@ import { dropToken, saveToken } from '../services/token';
 import { ReviewData, Reviews } from '../types/review';
 
 export const fetchFilms = createAsyncThunk<Films, undefined, AppThunk>(
-  'fetchFilms',
+  'app/fetchFilms',
   async (_arg, { extra: api }) => {
     const { data } = await api.get<Films>(ApiRoute.FILMS);
     return data;
@@ -17,31 +17,34 @@ export const fetchFilms = createAsyncThunk<Films, undefined, AppThunk>(
 );
 
 export const fetchFilm = createAsyncThunk<Film, number, AppThunk>(
-  'fetchFilm',
+  'film/fetchFilm',
   async (filmId, { extra: api }) => {
     const { data } = await api.get<Film>(`${ApiRoute.FILMS}/${filmId}`);
     return data;
   }
 );
 
-export const login = createAsyncThunk<void, undefined, AppThunk>(
-  'login',
+export const login = createAsyncThunk<User, undefined, AppThunk>(
+  'user/login',
   async (_arg, { dispatch, extra: api }) => {
-    await api.get(ApiRoute.LOGIN);
+    const { data } = await api.get<User>(ApiRoute.LOGIN);
     dispatch(fetchFavoriteFilms());
+    return data;
   }
 );
 
 export const logout = createAsyncThunk<void, undefined, AppThunk>(
-  'logout',
-  async (_arg, { extra: api }) => {
+  'user/logout',
+  async (_arg, { dispatch, extra: api }) => {
     await api.delete(ApiRoute.LOGOUT);
     dropToken();
+    dispatch(fetchFilms());
+    dispatch(fetchPromo());
   }
 );
 
 export const authorize = createAsyncThunk<User, AuthData, AppThunk>(
-  'authorize',
+  'user/authorize',
   async (authorizationData, { dispatch, extra: api }) => {
     const { data } = await api.post<User>(ApiRoute.LOGIN, authorizationData);
     saveToken(data.token);
@@ -52,7 +55,7 @@ export const authorize = createAsyncThunk<User, AuthData, AppThunk>(
 );
 
 export const fetchSimilarFilms = createAsyncThunk<Films, number, AppThunk>(
-  'fetchSimilarFilms',
+  'film/fetchSimilarFilms',
   async (filmId, { extra: api }) => {
     const { data } = await api.get<Films>(`${ApiRoute.FILMS}/${filmId}/similar`);
     return data;
@@ -60,7 +63,7 @@ export const fetchSimilarFilms = createAsyncThunk<Films, number, AppThunk>(
 );
 
 export const fetchReviews = createAsyncThunk<Reviews, number, AppThunk>(
-  'fetchReviews',
+  'film/fetchReviews',
   async (filmId, { extra: api }) => {
     const { data } = await api.get<Reviews>(`${ApiRoute.COMMENTS}/${filmId}`);
     return data;
@@ -73,7 +76,7 @@ type SaveReviewType = {
 }
 
 export const saveReview = createAsyncThunk<void, SaveReviewType, AppThunk>(
-  'saveReview',
+  'film/saveReview',
   async ({ reviewData: { filmId, review }, onFinish }, { dispatch, extra: api }) => {
     try {
       await api.post(`${ApiRoute.COMMENTS}/${filmId}`, review);
@@ -85,7 +88,7 @@ export const saveReview = createAsyncThunk<void, SaveReviewType, AppThunk>(
 );
 
 export const fetchFavoriteFilms = createAsyncThunk<Films, undefined, AppThunk>(
-  'fetchFavoriteFilms',
+  'app/fetchFavoriteFilms',
   async (_arg, { extra: api }) => {
     const { data } = await api.get<Films>(ApiRoute.FAVORITE);
     return data;
@@ -93,7 +96,7 @@ export const fetchFavoriteFilms = createAsyncThunk<Films, undefined, AppThunk>(
 );
 
 export const addFavoriteFilm = createAsyncThunk<Film, { filmId: number; status: number }, AppThunk>(
-  'addFavoriteFilm',
+  'app/addFavoriteFilm',
   async ({ filmId, status }, { extra: api }) => {
     const { data } = await api.post<Film>(`${ApiRoute.FAVORITE}/${filmId}/${status}`);
     return data;
@@ -101,7 +104,7 @@ export const addFavoriteFilm = createAsyncThunk<Film, { filmId: number; status: 
 );
 
 export const fetchPromo = createAsyncThunk<Film, undefined, AppThunk>(
-  'fetchPromo',
+  'app/fetchPromo',
   async (_arg, { extra: api }) => {
     const { data } = await api.get<Film>(ApiRoute.PROMO);
     return data;

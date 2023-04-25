@@ -11,7 +11,7 @@ export default function UserIcon(): JSX.Element {
   const user = useAppSelector(getUser);
   const dispatch = useAppDispatch();
 
-  const signOut = () => {
+  const handleSignOutClick = () => {
     dispatch(logout());
     dispatch(redirectToRoute('/'));
   };
@@ -25,7 +25,7 @@ export default function UserIcon(): JSX.Element {
               <img src={user.avatarUrl} alt="User avatar" width="63" height="63" />
             </div>
           </li>
-          <li className="user-block__item" onClick={signOut}>
+          <li className="user-block__item" onClick={handleSignOutClick}>
             <Link to="#" className="user-block__link">Sign out</Link>
           </li>
         </>

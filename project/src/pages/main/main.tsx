@@ -15,11 +15,19 @@ export default function MainScreen(): JSX.Element {
   const [filmsByGenre, setFilmsByGenre] = useState(films);
 
   useEffect(() => {
+    let isMounted = true;
     let filteredFilms = films;
     if (genre !== ALL_GENRES) {
       filteredFilms = films.filter((film) => film.genre === genre);
     }
-    setFilmsByGenre(filteredFilms);
+
+    if (isMounted) {
+      setFilmsByGenre(filteredFilms);
+    }
+
+    return () => {
+      isMounted = false;
+    };
   }, [genre, films]);
 
   return (

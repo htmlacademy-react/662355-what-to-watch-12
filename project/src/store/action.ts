@@ -1,3 +1,3 @@
 import { createAction } from '@reduxjs/toolkit';
 
-export const redirectToRoute = createAction<string>('redirectToRoute');
+export const redirectToRoute = createAction<string>('route/redirectToRoute');

@@ -27,7 +27,7 @@ function PlayerScreen({ film }: WithFilmProps) {
     setPlaying((state) => !state);
   };
 
-  const onClickFullscreen = () => {
+  const handleFullscreenClick = () => {
     if (videoRef.current) {
       videoRef.current.requestFullscreen();
     }
@@ -68,7 +68,7 @@ function PlayerScreen({ film }: WithFilmProps) {
           <PlayButton isPlaying={isPlaying} onClick={onClickPlay} />
           <div className="player__name">Transpotting</div>
 
-          <button type="button" className="player__full-screen" onClick={onClickFullscreen}>
+          <button type="button" className="player__full-screen" onClick={handleFullscreenClick}>
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
             </svg>
