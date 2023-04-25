@@ -8,7 +8,7 @@ import UserIcon from '../../components/user/user';
 import { WithFilmProps } from '../../types/film';
 import { TypeOfTab } from '../../const';
 import { useEffect } from 'react';
-import { withFilmLoading } from '../../components/hocs/with-film-loading';
+import { withFilmLoading } from '../../hocs/with-film-loading';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviews, fetchSimilarFilms } from '../../store/api-action';
 import { getReviews, getSimilarFilms } from '../../store/film-porcess/selectors';
