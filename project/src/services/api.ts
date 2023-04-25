@@ -33,9 +33,12 @@ export const createAPI = (): AxiosInstance => {
         browserHistory.push('/404');
         return;
       }
+
       if (err.response && err.response.status !== StatusCodes.UNAUTHORIZED) {
         toast.warn(err.response.data.error);
       }
+
+      throw err;
     }
   );
 
