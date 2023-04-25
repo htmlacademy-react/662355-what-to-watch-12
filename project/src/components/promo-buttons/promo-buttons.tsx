@@ -18,9 +18,9 @@ export default function PromoButtons({ film, filmsFavourite }: PromoButtonsProps
   const [isFavourite, setFavourite] = useState(film.isFavorite);
   const isAuth = authorizationStatus === AuthorizationStatus.AUTH;
 
-  const handlerClickPlay = () => navigate(`/player/${film.id}`);
+  const handleClickPlay = () => navigate(`/player/${film.id}`);
 
-  const handlerClickMyList = () => {
+  const handleClickMyList = () => {
     if (isAuth) {
       dispatch(addFavoriteFilm({ filmId: film.id, status: isFavourite ? 0 : 1 }));
       setFavourite((state) => !state);
@@ -38,13 +38,13 @@ export default function PromoButtons({ film, filmsFavourite }: PromoButtonsProps
       </p>
 
       <div className="film-card__buttons">
-        <button className="btn btn--play film-card__button" type="button" onClick={handlerClickPlay}>
+        <button className="btn btn--play film-card__button" type="button" onClick={handleClickPlay}>
           <svg viewBox="0 0 19 19" width="19" height="19">
             <use xlinkHref="#play-s"></use>
           </svg>
           <span>Play</span>
         </button>
-        <button className="btn btn--list film-card__button" type="button" onClick={handlerClickMyList}>
+        <button className="btn btn--list film-card__button" type="button" onClick={handleClickMyList}>
           <svg viewBox="0 0 19 20" width="19" height="20">
             <use xlinkHref={isFavourite ? '#in-list' : '#add'}></use>
           </svg>

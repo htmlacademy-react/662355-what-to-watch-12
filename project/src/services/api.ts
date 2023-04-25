@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 
 const BACKEND_URL = 'https://12.react.pages.academy/wtw';
 const REQUEST_TIMEOUT = 15000;
+const TOKEN_HEADER = 'x-token';
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
@@ -18,7 +19,7 @@ export const createAPI = (): AxiosInstance => {
       const token = getToken();
 
       if (token && config.headers) {
-        config.headers['x-token'] = token;
+        config.headers[TOKEN_HEADER] = token;
       }
 
       return config;
