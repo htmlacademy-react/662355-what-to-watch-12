@@ -16,11 +16,9 @@ export const withFilmLoading = (Component: ComponentType<WithFilmProps>) =>
     useEffect(() => {
       if (id) {
         const filmId = parseInt(id, 10);
-        if (!film || film.id !== filmId) {
-          dispatch(fetchFilm(filmId));
-        }
+        dispatch(fetchFilm(filmId));
       }
-    }, [id, film]);
+    }, [id]);
 
     return isLoading || !film ? <Loading /> : <Component film={film} />;
   };

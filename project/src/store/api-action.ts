@@ -24,19 +24,22 @@ export const fetchFilm = createAsyncThunk<Film, number, AppThunk>(
   }
 );
 
-export const login = createAsyncThunk<void, undefined, AppThunk>(
+export const login = createAsyncThunk<User, undefined, AppThunk>(
   'user/login',
   async (_arg, { dispatch, extra: api }) => {
-    await api.get(ApiRoute.LOGIN);
+    const { data } = await api.get<User>(ApiRoute.LOGIN);
     dispatch(fetchFavoriteFilms());
+    return data;
   }
 );
 
 export const logout = createAsyncThunk<void, undefined, AppThunk>(
   'user/logout',
-  async (_arg, { extra: api }) => {
+  async (_arg, { dispatch, extra: api }) => {
     await api.delete(ApiRoute.LOGOUT);
     dropToken();
+    dispatch(fetchFilms());
+    dispatch(fetchPromo());
   }
 );
 

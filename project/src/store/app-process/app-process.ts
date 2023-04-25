@@ -42,6 +42,9 @@ export const appProcess = createSlice({
       .addCase(addFavoriteFilm.fulfilled, (state, action) => {
         const i = state.films.findIndex((film) => film.id === action.payload.id);
         state.films[i] = action.payload;
+        if (state.promoFilm?.id === action.payload.id) {
+          state.promoFilm = action.payload;
+        }
       })
       .addCase(fetchPromo.fulfilled, (state, action) => {
         state.promoFilm = action.payload;

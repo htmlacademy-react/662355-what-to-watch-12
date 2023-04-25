@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { addFavoriteFilm } from '../../store/api-action';
-import { useState } from 'react';
 
 type PromoButtonsProps = {
   film: Film;
@@ -15,15 +14,13 @@ export default function PromoButtons({ film, filmsFavourite }: PromoButtonsProps
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const [isFavourite, setFavourite] = useState(film.isFavorite);
   const isAuth = authorizationStatus === AuthorizationStatus.AUTH;
 
   const handleClickPlay = () => navigate(`/player/${film.id}`);
 
   const handleClickMyList = () => {
     if (isAuth) {
-      dispatch(addFavoriteFilm({ filmId: film.id, status: isFavourite ? 0 : 1 }));
-      setFavourite((state) => !state);
+      dispatch(addFavoriteFilm({ filmId: film.id, status: film.isFavorite ? 0 : 1 }));
     } else {
       navigate('/login');
     }
@@ -46,12 +43,12 @@ export default function PromoButtons({ film, filmsFavourite }: PromoButtonsProps
         </button>
         <button className="btn btn--list film-card__button" type="button" onClick={handleClickMyList}>
           <svg viewBox="0 0 19 20" width="19" height="20">
-            <use xlinkHref={isFavourite ? '#in-list' : '#add'}></use>
+            <use xlinkHref={film.isFavorite ? '#in-list' : '#add'}></use>
           </svg>
           <span>My list</span>
           <span className="film-card__count">{filmsFavourite}</span>
         </button>
-        <Link to={isAuth ? `/films/${film.id}/review` : '/login'} className="btn film-card__button">Add review</Link>
+        {isAuth && <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link>}
       </div>
     </div>);
 }
