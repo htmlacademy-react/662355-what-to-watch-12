@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { WithFilmProps } from '../../types/film';
-import { withFilmLoading } from '../../components/hocs/with-film-loading';
+import { withFilmLoading } from '../../hocs/with-film-loading';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import PlayButton from '../../components/play-button/play-button';
 import { formatPlayerTime } from '../../utils';
