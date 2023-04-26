@@ -3,6 +3,7 @@ import { useAppDispatch } from '../../hooks';
 import { saveReview } from '../../store/api-action';
 import { ChangeEvent } from 'react';
 import Stars from '../stars/stars';
+import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH } from '../../const';
 
 type AddCommentProps = {
   filmId: number;
@@ -39,7 +40,7 @@ export default function AddComment({ filmId }: AddCommentProps): JSX.Element {
     }
   };
 
-  const isDisableButton = (): boolean => disabled || rating === 0 || comment.length < 50 || comment.length > 400;
+  const isDisableButton = (): boolean => disabled || rating === 0 || comment.length < MIN_COMMENT_LENGTH || comment.length > MAX_COMMENT_LENGTH;
 
   return (
     <form action="#" className="add-review__form">

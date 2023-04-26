@@ -35,7 +35,7 @@ export const createAPI = (): AxiosInstance => {
       }
 
       if (err.response && err.response.status !== StatusCodes.UNAUTHORIZED) {
-        toast.warn(err.response.data.error);
+        toast.warn(err.response.data?.error || 'Network error');
       }
 
       throw err;

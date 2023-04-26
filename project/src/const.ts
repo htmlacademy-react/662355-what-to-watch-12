@@ -7,6 +7,8 @@ export enum TypeOfTab {
 }
 
 export const FILMS_COUNT_STEP = 8;
+export const MIN_COMMENT_LENGTH = 50;
+export const MAX_COMMENT_LENGTH = 400;
 
 export enum ApiRoute {
   FILMS = '/films',

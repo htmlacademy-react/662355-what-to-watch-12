@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Film, Films } from '../../types/film';
 import FilmCard from '../film/film';
 import ShowMoreButton from '../show-more-button/show-more-button';
@@ -10,6 +10,18 @@ type FilmListProps = { films: Films };
 export function FilmList({ films }: FilmListProps): JSX.Element {
   const [filmId, setFilmId] = useState(-1);
   const [flimsCount, setFilmsCount] = useState(FILMS_COUNT_STEP);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (isMounted) {
+      setFilmsCount(FILMS_COUNT_STEP);
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [films]);
 
   const createFilmCard = (film: Film) => {
     let timer: NodeJS.Timeout;

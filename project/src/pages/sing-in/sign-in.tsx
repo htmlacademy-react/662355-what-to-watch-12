@@ -24,7 +24,7 @@ export default function SignInScreen() {
     }
 
     if (!isValidPassword(password)) {
-      throw Error('pasword must have at least one alphabet and one digit');
+      throw Error('password must have at least one alphabet and one digit');
     }
   };
 

@@ -38,7 +38,12 @@ function App(): JSX.Element {
             </PrivateRoute>
           }
           />
-          <Route path='/films/:id/review' element={<AddRewiewScreen />} />
+          <Route path='/films/:id/review' element={
+            <PrivateRoute>
+              <AddRewiewScreen />
+            </PrivateRoute>
+          }
+          />
           <Route path='/films/:id' element={<FilmScreen />} >
             <Route index element={<Overview />} />
             <Route path='details' element={<Details />} />
